@@ -7,7 +7,7 @@
 
 ---
 
-## What this is in one paragraph
+## What this is
 
 This is a **folder system**, not software. Each top-level folder is one specialist on Diana's team — orchestrator, lead qualifier, property researcher, client communications, transaction coordinator. Every active lead or deal lives as its own folder under `_cases/` with two files: `card.md` (facts) and `log.md` (timeline). Specialists read the case folder, do their work, and update the case folder. The **case folder is the handoff** — nothing gets passed between specialists in memory. If you can find the file, you can pick up the work. That is the entire system.
 
