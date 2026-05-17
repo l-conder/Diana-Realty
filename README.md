@@ -3,7 +3,7 @@
 > A five-specialist AI workspace for a 4-person boutique real-estate team in Austin.
 > Built so a new hire is operational in a day, not a quarter.
 
-**🌐 Live walkthrough: [Visit the landing page](https://l-conder.github.io/agency-icm/)** — visual architecture, hour-by-hour onboarding plan, and the design decisions, designed for someone who has never opened the repo.
+**🌐 Live walkthrough: [Visit the landing page](https://l-conder.github.io/dyana-realty/)** — visual architecture, hour-by-hour onboarding plan, and the design decisions, designed for someone who has never opened the repo.
 
 ---
 
