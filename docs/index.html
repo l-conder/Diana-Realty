@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agency — An ICM operating system for a four-person real estate team</title>
+<meta name="description" content="An AI operating system for Diana's boutique real estate team in Austin. Five specialists, a case-folder substrate, designed to onboard a new hire in a day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #f4efe4;
+    --bone-deep: #ebe4d2;
+    --paper: #faf6ec;
+    --ink: #1a1815;
+    --ink-soft: #3a342e;
+    --ink-mute: #6b6358;
+    --rule: #d8cfba;
+    --rust: #b54a2c;
+    --rust-deep: #8a3820;
+    --sage: #5d7060;
+    --gold: #c89b3c;
+    --shadow: 0 1px 0 rgba(26,24,21,0.04), 0 6px 24px -8px rgba(26,24,21,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bone);
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(at 15% 8%, rgba(181,74,44,0.04) 0px, transparent 50%),
+      radial-gradient(at 85% 75%, rgba(93,112,96,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection { background: var(--rust); color: var(--bone); }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* Top bar */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+  .topbar strong { color: var(--ink); font-weight: 600; letter-spacing: 0.06em; }
+  .topbar a { color: var(--rust); text-decoration: none; font-weight: 500; }
+  .topbar a:hover { color: var(--rust-deep); }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 90px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 350;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 36px;
+    max-width: 14ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-variation-settings: 'opsz' 144, 'SOFT' 100;
+    color: var(--rust);
+  }
+  .hero .lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 350;
+    font-variation-settings: 'opsz' 24;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin-bottom: 48px;
+  }
+  .hero .meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .hero .meta span strong { color: var(--ink); font-weight: 500; }
+
+  /* Section */
+  section { padding: 90px 0; border-bottom: 1px solid var(--rule); }
+  section.tight { padding: 60px 0; }
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-variation-settings: 'opsz' 72;
+    font-size: clamp(34px, 4.5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    max-width: 22ch;
+  }
+  h2 em { font-style: italic; color: var(--rust); font-variation-settings: 'opsz' 72, 'SOFT' 100; }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  p { margin-bottom: 18px; max-width: 64ch; }
+  p.large { font-size: 20px; line-height: 1.55; }
+
+  /* The diagram */
+  .diagram {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 56px 40px;
+    margin: 40px 0 28px;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .diagram svg { width: 100%; height: auto; max-width: 920px; display: block; margin: 0 auto; }
+  .diagram-caption {
+    font-size: 14px;
+    color: var(--ink-mute);
+    text-align: center;
+    font-style: italic;
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  /* Specialist cards */
+  .specialists {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .spec {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 28px;
+    background: var(--paper);
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .spec:hover { background: var(--bone-deep); }
+  .spec .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .spec .name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .spec .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .spec .link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* Code blocks */
+  .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    background: var(--ink);
+    color: #e8e1cf;
+    padding: 24px 28px;
+    border-radius: 4px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 24px 0;
+    white-space: pre;
+    box-shadow: var(--shadow);
+  }
+  .code .c { color: #8d8775; font-style: italic; }
+  .code .k { color: #c89b3c; }
+  .code .s { color: #c8a779; }
+
+  /* The hour-by-hour */
+  .day {
+    margin-top: 40px;
+    border-top: 1px solid var(--rule);
+  }
+  .hour {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 600px) {
+    .hour { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .hour .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    letter-spacing: 0.06em;
+    padding-top: 2px;
+  }
+  .hour .time small { color: var(--ink-mute); display: block; margin-top: 4px; font-size: 11px; }
+  .hour .body h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .hour .body p { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 0; }
+  .hour .body p + p { margin-top: 10px; }
+  .hour .body code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bone-deep);
+    padding: 1px 6px;
+    font-size: 0.88em;
+    border-radius: 2px;
+    color: var(--rust-deep);
+  }
+
+  /* Quote block */
+  .pull {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-variation-settings: 'opsz' 72, 'SOFT' 100;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.35;
+    color: var(--ink);
+    padding: 48px 0 40px;
+    max-width: 28ch;
+    position: relative;
+  }
+  .pull::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: var(--rust);
+    margin-bottom: 28px;
+  }
+  .pull cite {
+    display: block;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 24px;
+  }
+
+  /* Decisions list */
+  .decisions { margin-top: 32px; }
+  .decision {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+  }
+  .decision:last-child { border-bottom: none; }
+  .decision .n {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 72, 'SOFT' 100;
+    font-style: italic;
+    font-size: 36px;
+    color: var(--rust);
+    font-weight: 300;
+    line-height: 1;
+  }
+  .decision h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: -0.005em;
+  }
+  .decision p { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 0; max-width: 62ch; }
+
+  /* Footer */
+  footer {
+    padding: 60px 0 80px;
+    background: var(--ink);
+    color: var(--bone);
+  }
+  footer .wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; }
+  @media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+  footer h3 {
+    color: var(--bone);
+    font-family: 'Fraunces', Georgia, serif;
+    margin-bottom: 16px;
+  }
+  footer p { color: rgba(244,239,228,0.75); font-size: 15px; max-width: none; }
+  footer .meta-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(244,239,228,0.55);
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+  }
+  footer .meta-block strong { color: var(--bone); }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { color: var(--bone); }
+
+  /* Inline links */
+  .body-link { color: var(--rust); text-decoration: none; border-bottom: 1px solid rgba(181,74,44,0.3); transition: border 0.15s; }
+  .body-link:hover { border-bottom-color: var(--rust); }
+
+  /* Small details */
+  .grain {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    opacity: 0.5;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  .content { position: relative; z-index: 2; }
+
+  /* Tag pills for case folders */
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 12px; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 11px;
+    background: var(--bone-deep);
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .pill.active { background: var(--rust); color: var(--bone); border-color: var(--rust); }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="content">
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="wrap">
+    <span><strong>The Agency</strong> · An ICM operating system</span>
+    <span>Built for Diana · Austin, TX · <a href="#repo">View repository →</a></span>
+  </div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Clief Notes · Weekly Competition №4</div>
+    <h1>A system,<br>not <em>another</em><br>tool.</h1>
+    <p class="lede">Diana runs a four-person boutique real estate team in Austin. Sixty to eighty transactions a year. Everything lives in her head and three Google Docs. She doesn't want software. She wants a system her newest hire can pick up in a day.</p>
+    <div class="meta">
+      <span><strong>5</strong> specialist folders</span>
+      <span><strong>1</strong> case-folder substrate</span>
+      <span><strong>4</strong> agent voices</span>
+      <span><strong>1-day</strong> onboarding</span>
+    </div>
+  </div>
+</header>
+
+<!-- The problem -->
+<section>
+  <div class="wrap">
+    <span class="label">The Brief</span>
+    <h2>Diana's test was simple. <em>Operational in a day.</em></h2>
+    <div class="two-col">
+      <div>
+        <p class="large">When a lead comes in, who responds first depends on who saw the notification. When property research goes out, the agent doing it rebuilds the wheel every time. When a deal moves into contract, the newest agent slacks Diana at 11pm asking which document needs to go where.</p>
+        <p>Diana has tried AI tools. Either too generic to be useful or too complicated to teach. She doesn't want another platform. She wants an architecture — a way her team works that doesn't depend on remembering which Google Doc holds the truth.</p>
+      </div>
+      <div>
+        <div class="pull">
+          "I want a system I can teach my whole team to use in one week. If I hire a fifth agent in three months, I should be able to hand them this system and they should be operational in a day."
+          <cite>— Diana, the client brief</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The architecture -->
+<section>
+  <div class="wrap">
+    <span class="label">The Architecture</span>
+    <h2>Five specialists. One <em>shared substrate.</em></h2>
+    <p class="large">Every active lead, tour, deal, and post-close conversation lives in its own folder under <code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 8px; border-radius: 3px; color: var(--rust-deep);">_cases/</code>. Two files per case: a <strong>card</strong> (canonical facts) and a <strong>log</strong> (append-only timeline). The five specialists read from and write to the case folder. The folder <em>is</em> the handoff.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 920 540" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#b54a2c"/>
+          </marker>
+          <marker id="arrSoft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b6358"/>
+          </marker>
+        </defs>
+
+        <!-- Center: case folder -->
+        <g>
+          <rect x="340" y="220" width="240" height="100" rx="3" fill="#1a1815" stroke="#1a1815"/>
+          <text x="460" y="248" fill="#c89b3c" text-anchor="middle" font-size="11" letter-spacing="2">_CASES/</text>
+          <text x="460" y="272" fill="#f4efe4" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-style="italic">the substrate</text>
+          <text x="460" y="298" fill="#a8a08c" text-anchor="middle" font-size="11">card.md · log.md</text>
+        </g>
+
+        <!-- Specialist nodes -->
+        <!-- Orchestrator top center -->
+        <g>
+          <rect x="380" y="30" width="160" height="64" rx="3" fill="#b54a2c" stroke="#b54a2c"/>
+          <text x="460" y="55" fill="#f4efe4" text-anchor="middle" font-size="10" letter-spacing="2">00_ORCHESTRATOR</text>
+          <text x="460" y="78" fill="#f4efe4" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="14">the router</text>
+        </g>
+
+        <!-- Lead Qualifier upper left -->
+        <g>
+          <rect x="40" y="160" width="170" height="64" rx="3" fill="#faf6ec" stroke="#1a1815" stroke-width="1.5"/>
+          <text x="125" y="185" fill="#b54a2c" text-anchor="middle" font-size="10" letter-spacing="2">01_LEAD_QUALIFIER</text>
+          <text x="125" y="208" fill="#1a1815" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="14">first contact</text>
+        </g>
+
+        <!-- Property Research lower left -->
+        <g>
+          <rect x="40" y="320" width="170" height="64" rx="3" fill="#faf6ec" stroke="#1a1815" stroke-width="1.5"/>
+          <text x="125" y="345" fill="#b54a2c" text-anchor="middle" font-size="10" letter-spacing="2">02_PROPERTY_RESEARCH</text>
+          <text x="125" y="368" fill="#1a1815" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="14">comps &amp; context</text>
+        </g>
+
+        <!-- Comms upper right -->
+        <g>
+          <rect x="710" y="160" width="170" height="64" rx="3" fill="#faf6ec" stroke="#1a1815" stroke-width="1.5"/>
+          <text x="795" y="185" fill="#b54a2c" text-anchor="middle" font-size="10" letter-spacing="2">03_CLIENT_COMMS</text>
+          <text x="795" y="208" fill="#1a1815" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="14">in the agent's voice</text>
+        </g>
+
+        <!-- TC lower right -->
+        <g>
+          <rect x="710" y="320" width="170" height="64" rx="3" fill="#faf6ec" stroke="#1a1815" stroke-width="1.5"/>
+          <text x="795" y="345" fill="#b54a2c" text-anchor="middle" font-size="10" letter-spacing="2">04_TRANSACTION_COORD</text>
+          <text x="795" y="368" fill="#1a1815" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="14">deadline conscience</text>
+        </g>
+
+        <!-- _diana foundation -->
+        <g>
+          <rect x="200" y="450" width="520" height="60" rx="3" fill="#5d7060" stroke="#5d7060"/>
+          <text x="460" y="475" fill="#f4efe4" text-anchor="middle" font-size="10" letter-spacing="2">_DIANA/   ·   THE QUALITY CEILING</text>
+          <text x="460" y="496" fill="#f4efe4" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="13">about-diana · voice-profiles · decision-playbook</text>
+        </g>
+
+        <!-- Orchestrator → specialists -->
+        <path d="M 420 94 Q 250 130 175 160" fill="none" stroke="#b54a2c" stroke-width="1.5" marker-end="url(#arr)"/>
+        <path d="M 500 94 Q 670 130 745 160" fill="none" stroke="#b54a2c" stroke-width="1.5" marker-end="url(#arr)"/>
+        <path d="M 460 94 L 460 218" fill="none" stroke="#b54a2c" stroke-width="1.5" stroke-dasharray="3 4" marker-end="url(#arr)"/>
+
+        <!-- Specialists → case folder (read/write) -->
+        <path d="M 210 200 L 340 240" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 210 350 L 340 300" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 710 200 L 580 240" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 710 350 L 580 300" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+
+        <!-- Specialists ← case folder (back) -->
+        <path d="M 340 248 L 210 192" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 340 292 L 210 342" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 580 248 L 710 192" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+        <path d="M 580 292 L 710 342" fill="none" stroke="#6b6358" stroke-width="1" marker-end="url(#arrSoft)"/>
+
+        <!-- _diana foundation dotted lines to all specialists -->
+        <path d="M 280 450 Q 200 380 175 224" fill="none" stroke="#5d7060" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>
+        <path d="M 280 450 Q 200 410 175 384" fill="none" stroke="#5d7060" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>
+        <path d="M 640 450 Q 720 380 745 224" fill="none" stroke="#5d7060" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>
+        <path d="M 640 450 Q 720 410 745 384" fill="none" stroke="#5d7060" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>
+        <path d="M 460 450 L 460 322" fill="none" stroke="#5d7060" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>
+
+        <!-- Labels -->
+        <text x="270" y="148" fill="#b54a2c" font-size="10" font-style="italic">routes</text>
+        <text x="260" y="248" fill="#6b6358" font-size="10" font-style="italic">read · write</text>
+        <text x="335" y="445" fill="#5d7060" font-size="10" font-style="italic">loaded by every specialist, every run</text>
+      </svg>
+      <div class="diagram-caption">The orchestrator routes. Specialists read &amp; write the case folder. Diana's voice &amp; judgment underlie every run.</div>
+    </div>
+
+    <div class="specialists">
+      <a href="https://github.com/" class="spec" data-folder="00_orchestrator">
+        <div class="num">00 · ROUTER</div>
+        <div class="name">Orchestrator</div>
+        <div class="desc">The front door. Reads incoming requests, decides which specialist handles them, attaches the case context. The first question it asks: does a case folder already exist?</div>
+        <div class="link">→ 00_orchestrator/</div>
+      </a>
+      <a href="https://github.com/" class="spec" data-folder="01_lead_qualifier">
+        <div class="num">01 · FIRST CONTACT</div>
+        <div class="name">Lead Qualifier</div>
+        <div class="desc">Turns a "hi, I'm looking" into a qualified lead with a name, intent, budget, timeline, location, and motivation. Opens the case folder, writes the first card.md.</div>
+        <div class="link">→ 01_lead_qualifier/</div>
+      </a>
+      <a href="https://github.com/" class="spec" data-folder="02_property_research">
+        <div class="num">02 · CONTEXT</div>
+        <div class="name">Property Research</div>
+        <div class="desc">Pulls comps, neighborhood character, schools, flood data, anything material. Produces a research brief the agent walks into a client conversation with.</div>
+        <div class="link">→ 02_property_research/</div>
+      </a>
+      <a href="https://github.com/" class="spec" data-folder="03_client_communication">
+        <div class="num">03 · VOICE</div>
+        <div class="name">Client Communication</div>
+        <div class="desc">Drafts emails, texts, and follow-ups in the assigned agent's voice. Reads voice-profiles.md every run. The agent reviews and sends. No drafts go out unread.</div>
+        <div class="link">→ 03_client_communication/</div>
+      </a>
+      <a href="https://github.com/" class="spec" data-folder="04_transaction_coordinator">
+        <div class="num">04 · DEADLINES</div>
+        <div class="name">Transaction Coordinator</div>
+        <div class="desc">Owns the case from contract to close. Tracks every deadline, every document, every contingency. Flags risk before it becomes a problem. Diana reads the Friday digest with coffee.</div>
+        <div class="link">→ 04_transaction_coordinator/</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- The case folder concept -->
+<section>
+  <div class="wrap">
+    <span class="label">The Design Decision</span>
+    <h2>The case folder <em>is</em> the handoff.</h2>
+    <div class="two-col">
+      <div>
+        <p>Other systems pass typed JSON envelopes between specialists. Others pass ephemeral markdown briefings on Slack. Diana's problem isn't message-passing. It's that <em>state lives in her head and three Google Docs</em>.</p>
+        <p>So the substrate is the answer. Every active lead, tour, and deal lives in its own folder. The folder has two files: a <strong>card</strong> (the facts) and a <strong>log</strong> (the timeline). Specialists read the folder, do their work, and write to the folder. There is no "handoff packet." There is no envelope. There is only the case.</p>
+        <p>This means: if Marcus is at a closing and a question comes in, Sara can open the case folder and answer it. If Diana wakes up at 6am wondering about the Hendersons, she opens <code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 6px; border-radius: 3px; font-size: 0.92em; color: var(--rust-deep);">_cases/active/2026-04-22_henderson_seller/</code> and she's caught up in 90 seconds.</p>
+        <p>The folder is the system of record. Always.</p>
+      </div>
+      <div>
+<div class="code"><span class="c"># Inside any active case folder</span>
+_cases/active/
+└── 2026-05-15_smith_buyer/
+    ├── <span class="k">card.md</span>      <span class="c"># canonical facts</span>
+    └── <span class="k">log.md</span>       <span class="c"># append-only timeline</span>
+
+<span class="c"># What a card holds</span>
+- identifiers (case_id, status, owner)
+- the client (names, channels, source)
+- <span class="s">"The Six"</span> (intent, budget,
+  timeline, location, motivation,
+  constraints)
+- property (if known)
+- deal stage (once under contract)
+
+<span class="c"># What a log holds</span>
+- every touch, every routing,
+  every flag, every Friday digest,
+  every Diana-correction.
+- append-only. nothing gets deleted.
+- the case folder, by design,
+  is a complete deal history.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A typical flow -->
+<section>
+  <div class="wrap">
+    <span class="label">A Typical Flow</span>
+    <h2>How a referral becomes a closed deal.</h2>
+    <p class="large">The Smiths come in as a Tuesday referral. Eleven days later they're under contract on a Springdale Road bungalow. Here's the flow.</p>
+
+<div class="code"><span class="c">DAY 1 · TUE  Lauren Chen (past client) refers James &amp; Priya Smith.</span>
+  → <span class="k">00_orchestrator</span> reads: "Lauren said you'd want to talk to us"
+  → no case exists → routes to <span class="k">01_lead_qualifier</span>
+  → qualifier opens <span class="s">_cases/active/2026-05-15_smith_buyer/</span>
+  → writes card.md with The Six. Status: <span class="s">qualified</span>.
+  → routes back to orchestrator → assigns Marcus.
+
+<span class="c">DAY 2 · WED  Marcus tours Springdale Rd with the Smiths.</span>
+  → priya flags road noise concern → asks for comps + noise data
+  → orchestrator routes to <span class="k">02_property_research</span>
+  → research writes brief in log.md: comps, noise context,
+    risk flags (foundation history on this block).
+  → status: <span class="s">researching</span> → <span class="s">tour_complete</span>.
+
+<span class="c">DAY 4 · FRI  Smiths want to offer. Decision: $678K, escalation to $695K.</span>
+  → marcus updates card with offer terms
+  → orchestrator routes to <span class="k">03_client_communication</span>
+  → comms drafts the offer-cover-letter in Marcus's voice
+  → marcus reviews, sends, logs the send.
+
+<span class="c">DAY 6 · SUN  Offer accepted. Status flips to under_contract.</span>
+  → orchestrator routes to <span class="k">04_transaction_coordinator</span>
+  → TC day-1 sweep: populates deal stage, confirms contacts,
+    flags one open item (HOA docs).
+  → TC owns the case until close.
+
+<span class="c">DAY 6–DAY 33  TC runs daily checkpoints, Friday digests.</span>
+  → bounce-backs to comms for client updates.
+  → bounce-back to research when inspection finds a thing.
+  → diana reads friday digests with coffee. zero surprises.
+
+<span class="c">DAY 33  Close. Funds disbursed.</span>
+  → TC moves case to <span class="s">_cases/closed/</span>.
+  → routes to comms for thank-you cadence.
+  → routes to lead qualifier for 6/12/24-month referral touches.
+
+The case folder is closed but not dead. It feeds the next deal.</div>
+  </div>
+</section>
+
+<!-- The new hire onboarding -->
+<section>
+  <div class="wrap">
+    <span class="label">The Onboarding · Operational in a Day</span>
+    <h2>Monday, 9am. <em>The new hire opens her laptop.</em></h2>
+    <p class="large">Diana's test is the bar. A new agent should be operational in a day. Here's exactly what she reads, in order, with timestamps.</p>
+
+    <div class="day">
+      <div class="hour">
+        <div class="time">9:00 AM<small>15 min</small></div>
+        <div class="body">
+          <h4>Read the root <code>README.md</code></h4>
+          <p>What the system is, who the team is, the one rule (status before action), and the map of where everything lives. Don't try to memorize. Just notice the shape.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">9:15 AM<small>30 min</small></div>
+        <div class="body">
+          <h4>Read <code>_diana/about-diana.md</code> and <code>_diana/voice-profiles.md</code></h4>
+          <p>This is who you're working for and how the team sounds. Diana, Sara, Marcus, Jamie — each agent has their own voice. The comms specialist will draft in your voice eventually, but it starts with Diana reviewing every Jamie draft.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">9:45 AM<small>45 min</small></div>
+        <div class="body">
+          <h4>Read <code>_diana/decision-playbook.md</code> front-to-back</h4>
+          <p>Diana's eight years of judgment, written down. War stories, the "Pick Three" rule on inspection responses, when to walk a deal, how she thinks about a stressed seller. This is the quality ceiling. Come back to it constantly.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">10:30 AM<small>30 min</small></div>
+        <div class="body">
+          <h4>Read one closed case end-to-end</h4>
+          <p>Open <code>_cases/closed/2026-04-02_johnson_seller/</code>. Read the card, then read every entry in the log in order. This is one whole deal — first contact through close — in two files. By the end you'll understand the rhythm.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">11:00 AM<small>60 min</small></div>
+        <div class="body">
+          <h4>Read each specialist's <code>identity.md</code> and <code>handoff.md</code></h4>
+          <p>Five folders. For each one, two files. You're not memorizing — you're learning what each specialist owns and what it produces. Pay closest attention to the handoff files. The specialists' bounce-back patterns are the whole game.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">12:00 PM<small>lunch</small></div>
+        <div class="body">
+          <h4>Lunch.</h4>
+          <p>Don't read anything. Let it land.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">1:00 PM<small>60 min</small></div>
+        <div class="body">
+          <h4>Shadow a live case</h4>
+          <p>Open <code>_cases/active/</code>, pick the case with the most recent log activity, read everything. Watch how the orchestrator routed. Watch what the comms specialist drafted vs. what the agent sent. Watch what the TC flagged.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">2:00 PM<small>90 min</small></div>
+        <div class="body">
+          <h4>Run a practice request through the orchestrator</h4>
+          <p>Take a real (or hypothetical) inbound message. Send it to the orchestrator. Watch it route. Watch the qualifier write the card. Read what it produced. Compare to what Diana would have done. Note the gaps.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">3:30 PM<small>60 min</small></div>
+        <div class="body">
+          <h4>Read <code>examples.md</code> for each specialist</h4>
+          <p>Two or three scenarios per specialist, showing the file in action with real text. By now you've seen the shape — these are the textbook plays.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">4:30 PM<small>30 min</small></div>
+        <div class="body">
+          <h4>Sit with Diana for 30 minutes</h4>
+          <p>Bring three questions. Diana will answer them, and her answers will go into the playbook so the next person doesn't have to ask.</p>
+        </div>
+      </div>
+      <div class="hour">
+        <div class="time">5:00 PM<small>operational</small></div>
+        <div class="body">
+          <h4>You're operational.</h4>
+          <p>You won't be senior. You'll still need to learn the local market, the lender contacts, the title-company quirks. But by 5pm Monday, when a lead comes in, you know what to do with it. That was Diana's test. The system is the answer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The five design decisions -->
+<section>
+  <div class="wrap">
+    <span class="label">Real Decisions, Not Filled-In Templates</span>
+    <h2>Five decisions, written down. <em>So the next builder can disagree.</em></h2>
+
+    <div class="decisions">
+      <div class="decision">
+        <div class="n">01</div>
+        <div>
+          <h4>The case folder is the substrate, not the message.</h4>
+          <p>Other systems pass JSON envelopes or ephemeral briefings. This one writes to disk. Persistent state means any human or any new Claude session can pick a case up cold and be useful in two minutes. It is the answer to "everything lives in my head and three Google Docs." This is the central decision; every other decision follows from it.</p>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="n">02</div>
+        <div>
+          <h4><code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 8px; border-radius: 3px; font-size: 0.88em; color: var(--rust-deep);">_diana/</code> loaded by every specialist, every run.</h4>
+          <p>About-Diana, voice profiles, decision playbook. These three files are the quality ceiling. Generic input produces generic output. Diana's willingness to write down her actual thinking — including the war stories and the "Pick Three" rule and what makes her walk a deal — is what makes the system sound like her team, not like an LLM.</p>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="n">03</div>
+        <div>
+          <h4>Bounce-back is first-class, not an exception.</h4>
+          <p>Real deals don't move forward in a clean line. The comms specialist gets a reply and needs the TC to check feasibility. The TC finds an easement and needs research to investigate. Every <code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 8px; border-radius: 3px; font-size: 0.88em; color: var(--rust-deep);">handoff.md</code> documents return paths, not just forward paths. Diana's team works in reality, not in a flowchart.</p>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="n">04</div>
+        <div>
+          <h4>Voice profiles for every human, not just the principal.</h4>
+          <p>Marcus, Sara, and Jamie each get their own voice profile. Jamie (six months in) gets her own — she's allowed to sound like herself, not like Diana. Until her voice profile is mature, comms drafts for Jamie always route through Diana for review. The system grows up with her.</p>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="n">05</div>
+        <div>
+          <h4>The orchestrator asks one question first: does a case exist?</h4>
+          <p>The single rule that keeps the system coherent across a forty-deal-in-flight Tuesday afternoon. If a case exists, the work happens inside that folder. If not, the qualifier opens one. There is no scenario where work happens "around" the case folder. State is the source of truth, always.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Repo / next steps -->
+<section id="repo">
+  <div class="wrap">
+    <span class="label">The Deliverable</span>
+    <h2>Five folders.<br>One case substrate.<br><em>One repo.</em></h2>
+    <p class="large">Drop the repo into Claude Code (or any agent runtime that reads the filesystem) and the system is operational. Setup is two steps: clone the repo, point Claude at the root. The folder structure is the system.</p>
+
+    <p>The repo includes a working example case (<code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 8px; border-radius: 3px; font-size: 0.92em; color: var(--rust-deep);">smith_buyer</code>, mid-flow) and a complete closed case (<code style="font-family: 'JetBrains Mono', monospace; background: var(--bone-deep); padding: 2px 8px; border-radius: 3px; font-size: 0.92em; color: var(--rust-deep);">johnson_seller</code>, full lifecycle) so a new hire's "read one closed case end-to-end" step on their first day has something real to read.</p>
+
+    <div class="pills">
+      <span class="pill active">README.md</span>
+      <span class="pill">_diana/</span>
+      <span class="pill">_cases/</span>
+      <span class="pill">00_orchestrator/</span>
+      <span class="pill">01_lead_qualifier/</span>
+      <span class="pill">02_property_research/</span>
+      <span class="pill">03_client_communication/</span>
+      <span class="pill">04_transaction_coordinator/</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h3>The Agency</h3>
+      <p>An ICM operating system for a four-person boutique real estate team in Austin, Texas. Built for the Clief Notes Weekly Competition №4, May 2026. The folder structure is the deliverable; the case folder is the substrate; Diana's judgment, written down, is the ceiling.</p>
+      <p style="margin-top: 24px;"><a href="https://github.com/RinDig/Interpreted-Context-Methdology">ICM framework reference →</a></p>
+    </div>
+    <div class="meta-block">
+      <strong>WEEK</strong><br>04 · The Agency<br><br>
+      <strong>METHODOLOGY</strong><br>Interpreted Context Methodology<br><br>
+      <strong>CLIENT</strong><br>Diana · Austin, TX<br><br>
+      <strong>BAR</strong><br>Operational in one day
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
