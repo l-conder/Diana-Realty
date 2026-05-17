@@ -5,8 +5,6 @@
 
 **🌐 Live walkthrough: [Visit the landing page](https://l-conder.github.io/agency-icm/)** — visual architecture, hour-by-hour onboarding plan, and the design decisions, designed for someone who has never opened the repo.
 
-> *Replace `YOUR-USERNAME` with your GitHub username after pushing. Enable Pages: Settings → Pages → Source: `main` branch, `/docs` folder.*
-
 ---
 
 ## What this is in one paragraph
