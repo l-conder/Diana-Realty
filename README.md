@@ -1,4 +1,4 @@
-# Agency ICM — Diana's Team Operating System
+# Agency ICM - Diana's Team Operating System
 
 > A five-specialist AI workspace for a 4-person boutique real-estate team in Austin.
 > Built so a new hire is operational in a day, not a quarter.
